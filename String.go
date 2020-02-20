@@ -1,4 +1,4 @@
-package Helper
+package helper
 
 type _string struct {
 

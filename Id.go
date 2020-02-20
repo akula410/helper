@@ -9,7 +9,7 @@ Helper.ID.ConnClose = func(){
 
 id := Helper.ID.GetKey("go_filters", "filter_id", 1)
  */
-package Helper
+package helper
 
 import (
 	"database/sql"
