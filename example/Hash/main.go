@@ -5,7 +5,9 @@ import (
 	"github.com/akula410/helper"
 )
 
-func exampleHash(pass string){
+//For work with hash BCrypt
+func main() {
+	var pass = "12345678"
 	fmt.Println("password: ", pass)
 	var hash1 = helper.Hash.GetHashBCrypt(pass)
 	var hash2 = helper.Hash.GetHashBCrypt(pass)
