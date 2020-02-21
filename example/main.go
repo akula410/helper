@@ -34,6 +34,9 @@ func main(){
 	fmt.Println(helper.Map.Element("key1", data, "value3"))
 	fmt.Println(helper.Map.Element("key2", data, "value3"))
 	fmt.Println(helper.Map.Element("key3", data, "value3"))
+
+
+
 	fmt.Println("==================end===================")
 
 

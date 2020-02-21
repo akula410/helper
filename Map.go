@@ -15,7 +15,7 @@ func (m *_map) Element(key string, haystack map[interface{}]interface{}, dft int
 	return dft
 }
 
-func (m *_map) OfElement(name string, value string, haystack []map[string]interface{}, dft map[string]interface{}) map[string]interface{}{
+func (m *_map) OfElement(name string, value string, haystack []map[interface{}]interface{}, dft map[interface{}]interface{}) map[interface{}]interface{}{
 	if haystack != nil {
 		for _, item := range haystack {
 			for itemName, itemValue := range item {
