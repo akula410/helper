@@ -30,7 +30,7 @@ func main(){
 
 
 	fmt.Println("==============helper.Map=================")
-	var data = map[interface{}]interface{}{"key1":"value1", "key2":"value2"}
+	var data = map[string]interface{}{"key1":"value1", "key2":"value2"}
 	fmt.Println(helper.Map.Element("key1", data, "value3"))
 	fmt.Println(helper.Map.Element("key2", data, "value3"))
 	fmt.Println(helper.Map.Element("key3", data, "value3"))
