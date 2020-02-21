@@ -7,7 +7,7 @@ type _map struct {
 var Map _map
 
 
-func (m *_map) Element(key string, haystack map[string]interface{}, dft interface{}) interface{}{
+func (m *_map) Element(key string, haystack map[interface{}]interface{}, dft interface{}) interface{}{
 	if result, ok := haystack[key]; ok {
 		return result
 	}
