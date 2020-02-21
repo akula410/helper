@@ -47,8 +47,3 @@ func (u *uuid) GetUniqName(length int)string{
 	uuid[int(length/4)] = uuid[int(length/4)]&^0xc0 | 0x80
 	return fmt.Sprintf("%x",uuid[0:])
 }
-
-func (u *uuid) SetSeparator(separator string)*uuid{
-	UUID.separator = separator
-	return &UUID
-}
