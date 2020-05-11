@@ -46,6 +46,18 @@ func main() {
 		showTree(r, "")
 	}
 
+
+	/** Console
+		0 )  {1 map[group_id:1 name:Группа 1 parent_id:0] 0}
+		1 )  {3 map[group_id:3 name:Группа 1.1 parent_id:1] 1}
+		2 )  {2 map[group_id:2 name:Группа 2 parent_id:0] 0}
+		3 )  {4 map[group_id:4 name:Группа 2.1 parent_id:2] 1}
+	*/
+	var result2 = helper.Transform.TreeToLine(result, 1)
+	for i, r := range result2 {
+		fmt.Println(i, ") ", r)
+	}
+
 }
 
 func showTree(data helper.TreeModel, p string){
