@@ -15,6 +15,12 @@ type transform struct {
 
 }
 
+type TreeModel struct {
+	Id interface{}
+	Data map[string]interface{}
+	Children []TreeModel
+}
+
 var Transform transform
 
 func (t *transform) ToString(value interface{}, def string)string{
@@ -312,5 +318,46 @@ func (t *transform)Base64ToByte(data string)[]byte{
 	if err != nil {
 		panic(err)
 	}
+	return result
+}
+
+func (t *transform)LineToTree(rows []map[string]interface{}, id string, parent string)[]TreeModel{
+	var cache = rows
+	var processed = make(map[interface{}]bool)
+	return t.lineToTree(&rows, &cache, &processed, id, parent)
+}
+
+
+func (t *transform)lineToTree(rows *[]map[string]interface{}, cache *[]map[string]interface{}, processed *map[interface{}]bool, id string, parent string)[]TreeModel{
+	var result = make([]TreeModel, 0)
+	for _, field := range *cache{
+		var prc = *processed
+		if _, ok := prc[field[id]]; !ok {
+			prc[field[id]] = true
+			*processed = prc
+			var children = make([]TreeModel, 0)
+			if mdfCache := t.isTreeParent(rows, parent, field[parent]); len(mdfCache)>0{
+				children = t.lineToTree(rows, &mdfCache, processed, id, parent)
+			}
+			var data = TreeModel{
+				Id:field[id],
+				Data:field,
+				Children:children,
+			}
+
+			result = append(result, data)
+		}
+	}
+	return result
+}
+
+func (t *transform) isTreeParent(rows *[]map[string]interface{}, parent string, parentId interface{})[]map[string]interface{}{
+	var result = make([]map[string]interface{}, 0)
+	for _, row := range *rows {
+		if row[parent] == parentId {
+			result = append(result, row)
+		}
+	}
+
 	return result
 }
