@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"helper"
+	"github.com/akula410/helper"
 )
 
 func main() {
@@ -42,6 +42,7 @@ func main() {
 }
 
 func showTree(data helper.TreeModel, p string){
+	fmt.Println(p, data.Data["name"], fmt.Sprintf("(%s)", data.Id))
 	if data.Children != nil {
 		p += "-"
 		for _, child := range data.Children {
