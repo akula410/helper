@@ -336,7 +336,8 @@ func (t *transform)lineToTree(rows *[]map[string]interface{}, cache *[]map[strin
 			prc[field[id]] = true
 			*processed = prc
 			var children = make([]TreeModel, 0)
-			if mdfCache := t.isTreeParent(rows, parent, field[parent]); len(mdfCache)>0{
+			if mdfCache := t.isTreeParent(rows, parent, field[id]); len(mdfCache)>0{
+				fmt.Println("mdfCache", mdfCache)
 				children = t.lineToTree(rows, &mdfCache, processed, id, parent)
 			}
 			var data = TreeModel{
