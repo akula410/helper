@@ -17,13 +17,13 @@ type transform struct {
 
 type TreeModel struct {
 	Id interface{}
-	ParentId interface{}
 	Data map[string]interface{}
 	Children []TreeModel
 }
 
 type LineModel struct {
 	Id interface{}
+	ParentId interface{}
 	Data map[string]interface{}
 	Level int
 }
@@ -344,7 +344,7 @@ func (t *transform) TreeToLine(data []TreeModel, level int) []LineModel{
 
 func (t *transform) treeToLine(data TreeModel, parent interface{}, level int, i int) []LineModel{
 	var result = make([]LineModel, 0)
-	result = append(result, LineModel{Id:data.Id, Data:data.Data, Level:i})
+	result = append(result, LineModel{Id:data.Id, Data:data.Data, Level:i, ParentId:parent})
 	if i < level {
 		i++
 		for _, child := range data.Children {
