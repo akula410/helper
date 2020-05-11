@@ -35,6 +35,13 @@ func main() {
 	}
 	var result = helper.Transform.LineToTree(rows, "group_id", "parent_id")
 
+	/** Console
+		 Группа 1 (1)
+		- Группа 1.1 (3)
+		-- Группа 1.1.1 (5)
+		 Группа 2 (2)
+		- Группа 2.1 (4)
+	*/
 	for _, r := range result {
 		showTree(r, "")
 	}
