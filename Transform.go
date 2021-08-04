@@ -4,6 +4,8 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"mime/multipart"
 	"net/http"
 	"reflect"
 	"regexp"
@@ -340,6 +342,16 @@ func (t *transform) TreeToLine(data []TreeModel, level int) []LineModel{
 		result = append(result, t.treeToLine(d, d.Id, level, 0)...)
 	}
 	return result
+}
+
+func (t *transform) FileToByte(file multipart.File)[]byte{
+
+	fileBytes, err := ioutil.ReadAll(file)
+	if err != nil {
+		panic(err)
+	}
+	return fileBytes
+	
 }
 
 func (t *transform) treeToLine(data TreeModel, parent interface{}, level int, i int) []LineModel{
