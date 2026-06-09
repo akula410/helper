@@ -1,6 +1,6 @@
 # helper/v2
 
-A small, safe, dependency-free utility library for Go.
+A small, safe utility library for Go with minimal dependencies.
 
 ```bash
 go get github.com/akula410/helper/v2
@@ -38,7 +38,7 @@ ok := password.Verify(hash, "secret")   // true
 
 // Random
 id, _    := random.UUIDv4()            // "a1b2c3d4-..."
-token, _ := random.Token(32)           // 64-char hex string
+token, _ := random.Token(32)           // 43-char URL-safe base64 string
 
 // Convert
 n   := convert.Int("44", 0)            // 44
@@ -53,7 +53,8 @@ b   := convert.Bool("true", false)     // true
 - **Context-aware where there is I/O** — see `idgen` docs for database patterns.
 - **Generics where useful** — `mapsx`, `slicesx`, `tree`, `jsonx` use type parameters.
 - **Small, focused packages** — import only what you need.
-- **No heavy external dependencies** — only `golang.org/x/crypto` for bcrypt.
+- **Minimal external dependencies** — only `golang.org/x/crypto` for bcrypt; all other
+  packages use the Go standard library.
 
 ## Integration with akula410 packages
 

@@ -1,6 +1,7 @@
 package random_test
 
 import (
+	"encoding/base64"
 	"regexp"
 	"strings"
 	"testing"
@@ -91,13 +92,37 @@ func TestMustHex_Panic(t *testing.T) {
 	random.MustHex(0)
 }
 
-func TestToken_Length(t *testing.T) {
-	s, err := random.Token(32)
+// TestToken_URLSafe checks that Token returns a valid base64.RawURLEncoding string.
+func TestToken_URLSafe(t *testing.T) {
+	const n = 32
+	s, err := random.Token(n)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(s) != 64 {
-		t.Fatalf("expected len 64, got %d", len(s))
+	// base64.RawURLEncoding: no padding, URL-safe alphabet.
+	// Expected length: ceil(n*4/3) = ceil(32*4/3) = 43.
+	want := base64.RawURLEncoding.EncodedLen(n)
+	if len(s) != want {
+		t.Fatalf("expected len %d for Token(%d), got %d", want, n, len(s))
+	}
+	// Must decode cleanly.
+	if _, err := base64.RawURLEncoding.DecodeString(s); err != nil {
+		t.Fatalf("Token result is not valid base64.RawURLEncoding: %v", err)
+	}
+	// Must not contain padding or URL-unsafe characters.
+	if strings.ContainsAny(s, "+/=") {
+		t.Fatalf("Token contains URL-unsafe chars: %q", s)
+	}
+}
+
+func TestToken_InvalidLength(t *testing.T) {
+	_, err := random.Token(0)
+	if err == nil {
+		t.Fatal("expected error for length 0")
+	}
+	_, err = random.Token(-1)
+	if err == nil {
+		t.Fatal("expected error for negative length")
 	}
 }
 

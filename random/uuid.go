@@ -1,9 +1,10 @@
 // Package random provides cryptographically secure random generators:
-// UUID v4, hex strings, and opaque tokens.
+// UUID v4, hex strings, and opaque URL-safe tokens.
 package random
 
 import (
 	"crypto/rand"
+	"encoding/base64"
 	"encoding/hex"
 	"errors"
 	"fmt"
@@ -38,7 +39,8 @@ func MustUUIDv4() string {
 	return v
 }
 
-// Hex returns a random hex-encoded string of exactly n bytes (resulting string length = 2*n).
+// Hex returns a random hex-encoded string from n random bytes.
+// The resulting string has length 2*n.
 func Hex(n int) (string, error) {
 	if n <= 0 {
 		return "", ErrInvalidLength
@@ -59,10 +61,18 @@ func MustHex(n int) string {
 	return s
 }
 
-// Token returns a URL-safe base64 (hex) random string of n random bytes.
-// The returned string has length 2*n.
+// Token returns a URL-safe base64 string (base64.RawURLEncoding, no padding)
+// generated from n random bytes. The resulting string length is ceil(n*4/3).
+// Use this for session tokens, API keys, and similar opaque identifiers.
 func Token(n int) (string, error) {
-	return Hex(n)
+	if n <= 0 {
+		return "", ErrInvalidLength
+	}
+	b := make([]byte, n)
+	if _, err := io.ReadFull(rand.Reader, b); err != nil {
+		return "", err
+	}
+	return base64.RawURLEncoding.EncodeToString(b), nil
 }
 
 // MustToken is like Token but panics on error.
