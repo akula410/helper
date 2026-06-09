@@ -24,11 +24,9 @@ func main() {
 	fmt.Println("last id = ", id)
 }
 
-
-
 var MySql c.MySql
 
-func init(){
+func init() {
 	MySql.DBName = "DB_NAME"
 	MySql.Host = "localhost"
 	MySql.User = "root"

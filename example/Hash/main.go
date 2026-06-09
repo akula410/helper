@@ -5,7 +5,7 @@ import (
 	"github.com/akula410/helper"
 )
 
-//For work with hash BCrypt
+// For work with hash BCrypt
 func main() {
 	var pass = "12345678"
 	fmt.Println("password: ", pass)
